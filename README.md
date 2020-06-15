@@ -1,2 +1,6 @@
+
+![alt](images/logo.png)
 # AnalyzeTheChat
- Python based whatsapp chat analyzer
+ Python based WhatsApp chat analyzer
+
+# Coming Soon

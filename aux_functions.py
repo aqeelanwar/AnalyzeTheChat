@@ -180,7 +180,7 @@ def plot_bar(x, y, title, save_path, max_limit=0):
 
     barlist = plt.bar(x=x, height=y, color=GREEN_COLOR)
     plt.title(title, fontdict={"fontsize": 20})
-    barlist[np.argmax(y)].set_color(ORANGE_COLOR)
+    barlist[np.argmax(np.array(y))].set_color(ORANGE_COLOR)
     for bar in barlist:
         yval = bar.get_height()
         plt.text(

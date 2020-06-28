@@ -50,3 +50,8 @@ python main.py --path theoffice.txt --keyword 'jello' --save_as pdf
 
 
 ## View the results
+The results can be viewed in the results folder.
+![results](images/example.png)
+
+
+# Example

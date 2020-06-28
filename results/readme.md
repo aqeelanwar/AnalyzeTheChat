@@ -1,0 +1,1 @@
+This folder contains the graphs generated for the selected WhatsApp chat

@@ -21,7 +21,7 @@ def crawl_the_chat(chat):
     # pattern_time_12hr = ", (0?[0-9]|1[0-2]):([0-9]|[0-5][0-9]) [AP]M"
 
     pattern_time_24hr = ", (0?[0-9]|1[0-9]|2[0-3]):([0-5][0-9])(:[0-5][0-9])?"
-    pattern_time_12hr = ", (0?[0-9]|1[0-2]):([0-9]|[0-5][0-9])(:[0-5][0-9])? [AP]M"
+    pattern_time_12hr = ", (0?[0-9]|1[0-2]):([0-9]|[0-5][0-9])(:[0-5][0-9])? [APap][Mm]"
 
     pattern_date_US = "(0?[1-9]|1[0-2])/(0?[1-9]|[12][0-9]|3[01])/(\d{2}|\d{4}), "
     pattern_date_UK = "([12][0-9]|3[01]|0?[1-9])/(0?[1-9]|1[0-2])/(\d{2}|\d{4}), "
@@ -95,10 +95,10 @@ def crawl_the_chat(chat):
             hour = np.round(int(time_split[0]))
             min = np.round(int(time_split[1].split(" ")[0]))
 
-            if "M" in last_time:
+            if "M" in last_time or "m" in last_time:
                 # AM/PM format - Convert to 24 hr format
                 AM_PM = time_split[-1].split(" ")[1]
-                if AM_PM == "PM":
+                if AM_PM == "PM" or AM_PM == "pm":
                     hour += 12
                     if hour == 24:
                         hour = 12

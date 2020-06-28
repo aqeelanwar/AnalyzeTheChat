@@ -13,7 +13,7 @@ import time as T
 import cv2, emoji
 
 # rc("text", usetex=True)
-rc("font", family="cmr10")
+# rc("font", family="cmr10")
 GREEN_COLOR = "#A5AB81"
 ORANGE_COLOR = "#DD8047"
 BLUE_COLOR = "#94B6D2"

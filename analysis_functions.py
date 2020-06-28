@@ -23,7 +23,7 @@ def crawl_the_chat(chat):
     pattern_time_24hr = ", (0?[0-9]|1[0-9]|2[0-3]):([0-5][0-9])(:[0-5][0-9])?"
     pattern_time_12hr = ", (0?[0-9]|1[0-2]):([0-9]|[0-5][0-9])(:[0-5][0-9])? [APap][Mm]"
 
-    pattern_date_US = "(0?[1-9]|1[0-2])/(0?[1-9]|[12][0-9]|3[01])/(\d{2}|\d{4}), "
+    pattern_date_US = "(0?[1-9]|1[0-2])[/.](0?[1-9]|[12][0-9]|3[01])[/.](\d{2}|\d{4}), "
     pattern_date_UK = "([12][0-9]|3[01]|0?[1-9])/(0?[1-9]|1[0-2])/(\d{2}|\d{4}), "
 
     # pattern_date_US = "(0?[1-9]|1[0-2])/(0?[1-9]|[12][0-9]|3[01])/\d\d"
@@ -64,6 +64,8 @@ def crawl_the_chat(chat):
 
         if len(date.split("/")[-1]) > 2:
             date_split = date.split("/")
+            if len(date_split) < 3:
+                date_split = date.split(".")
             date = date_split[0] + "/" + date_split[1] + "/" + date_split[2][2:4]
 
         day_of_week = day_of_week_labels[T.strptime(date, "%m/%d/%y").tm_wday]

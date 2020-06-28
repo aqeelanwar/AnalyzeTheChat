@@ -17,11 +17,15 @@ def crawl_the_chat(chat):
     # To identify messages, regular expressions are used to identify dates format
     # Depending on the user's mobile clock settings, there existing two clock patterns
     print('Crawling the chat')
-    pattern_time_24hr = "(0?[0-9]|1[0-9]|2[0-3]):([0-5][0-9])"
-    pattern_time_12hr = "(0?[0-9]|1[0-2]):([0-9]|[0-5][0-9]) [AP]M"
+    pattern_time_24hr = ", (0?[0-9]|1[0-9]|2[0-3]):([0-5][0-9])"
+    pattern_time_12hr = ", (0?[0-9]|1[0-2]):([0-9]|[0-5][0-9]) [AP]M"
+    # \d{2}(?:\d{2})?
 
-    pattern_date_US = "(0?[1-9]|1[0-2])/(0?[1-9]|[12][0-9]|3[01])/\d\d"
-    pattern_date_UK = "([12][0-9]|3[01]|0?[1-9])/(0?[1-9]|1[0-2])/\d\d"
+    pattern_date_US = "(0?[1-9]|1[0-2])/(0?[1-9]|[12][0-9]|3[01])/(\d{2}|\d{4}), "
+    pattern_date_UK = "([12][0-9]|3[01]|0?[1-9])/(0?[1-9]|1[0-2])/(\d{2}|\d{4}), "
+
+    # pattern_date_US = "(0?[1-9]|1[0-2])/(0?[1-9]|[12][0-9]|3[01])/\d\d"
+    # pattern_date_UK = "([12][0-9]|3[01]|0?[1-9])/(0?[1-9]|1[0-2])/\d\d"
 
     day_of_week_labels = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
     # p = re.compile(pattern)
@@ -32,29 +36,40 @@ def crawl_the_chat(chat):
     dp = re.compile(pattern_date_UK)
     for d in dp.finditer(chat):
         date = d.group()
-        if int(date.split("/")[1]) > 12:
+        if int(date.split("/")[0]) > 12:
             pattern_date = pattern_date_UK
             is_UK = True
 
     if not is_UK:
         pattern_date = pattern_date_US
 
+    ccc = re.search(pattern_time_12hr, chat)
     if re.search(pattern_time_12hr, chat):
         pattern_time = pattern_time_12hr
     else:
         pattern_time = pattern_time_24hr
 
-    pattern = pattern_date + ", " + pattern_time
+    pattern = pattern_date + pattern_time[2:]
+    pattern_time = pattern_time[2:]
     p = re.compile(pattern)
+    ccc = re.findall(pattern, chat)
     for m in p.finditer(chat):
         # data_row = []
         DateTime = m.group()
         # Split dateTime
+
         time = re.search(pattern_time, DateTime).group()
         date = re.search(pattern_date, DateTime).group()
+        date = date[:-2]
         if is_UK:
             spp = date.split("/")
             date = spp[1] + "/" + spp[0] + "/" + spp[2]
+
+        if len(date.split('/')[-1])>2:
+            date_split = date.split('/')
+            date = date_split[0]+'/'+date_split[1]+'/'+date_split[2][2:4]
+            cc=1
+
         day_of_week = day_of_week_labels[T.strptime(date, "%m/%d/%y").tm_wday]
 
         if last_message_end > 0:

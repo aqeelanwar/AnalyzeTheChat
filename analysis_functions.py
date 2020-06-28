@@ -16,10 +16,9 @@ def crawl_the_chat(chat):
     # Each message is stored as a row in the dataframe
     # To identify messages, regular expressions are used to identify dates format
     # Depending on the user's mobile clock settings, there existing two clock patterns
-    print('Crawling the chat')
+    print("Crawling the chat")
     pattern_time_24hr = ", (0?[0-9]|1[0-9]|2[0-3]):([0-5][0-9])"
     pattern_time_12hr = ", (0?[0-9]|1[0-2]):([0-9]|[0-5][0-9]) [AP]M"
-    # \d{2}(?:\d{2})?
 
     pattern_date_US = "(0?[1-9]|1[0-2])/(0?[1-9]|[12][0-9]|3[01])/(\d{2}|\d{4}), "
     pattern_date_UK = "([12][0-9]|3[01]|0?[1-9])/(0?[1-9]|1[0-2])/(\d{2}|\d{4}), "
@@ -28,7 +27,6 @@ def crawl_the_chat(chat):
     # pattern_date_UK = "([12][0-9]|3[01]|0?[1-9])/(0?[1-9]|1[0-2])/\d\d"
 
     day_of_week_labels = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
-    # p = re.compile(pattern)
     data = []
     data_extended = []
     last_message_end = 0
@@ -43,7 +41,6 @@ def crawl_the_chat(chat):
     if not is_UK:
         pattern_date = pattern_date_US
 
-    ccc = re.search(pattern_time_12hr, chat)
     if re.search(pattern_time_12hr, chat):
         pattern_time = pattern_time_12hr
     else:
@@ -52,12 +49,9 @@ def crawl_the_chat(chat):
     pattern = pattern_date + pattern_time[2:]
     pattern_time = pattern_time[2:]
     p = re.compile(pattern)
-    ccc = re.findall(pattern, chat)
     for m in p.finditer(chat):
-        # data_row = []
         DateTime = m.group()
         # Split dateTime
-
         time = re.search(pattern_time, DateTime).group()
         date = re.search(pattern_date, DateTime).group()
         date = date[:-2]
@@ -65,10 +59,9 @@ def crawl_the_chat(chat):
             spp = date.split("/")
             date = spp[1] + "/" + spp[0] + "/" + spp[2]
 
-        if len(date.split('/')[-1])>2:
-            date_split = date.split('/')
-            date = date_split[0]+'/'+date_split[1]+'/'+date_split[2][2:4]
-            cc=1
+        if len(date.split("/")[-1]) > 2:
+            date_split = date.split("/")
+            date = date_split[0] + "/" + date_split[1] + "/" + date_split[2][2:4]
 
         day_of_week = day_of_week_labels[T.strptime(date, "%m/%d/%y").tm_wday]
 
@@ -150,13 +143,21 @@ def chat_summary(df):
 
     # Remove 'System Generated' from participant's list
 
-    if 'System Generated' in df["Contact"].values:
+    if "System Generated" in df["Contact"].values:
         active_participants = df["Contact"].nunique() - 1
     else:
         active_participants = df["Contact"].nunique()
 
     df = pd.DataFrame(
-        [[total_msgs, active_participants, first_msg_date, last_msg_date, int(days_active)]],
+        [
+            [
+                total_msgs,
+                active_participants,
+                first_msg_date,
+                last_msg_date,
+                int(days_active),
+            ]
+        ],
         columns=[
             "Total Messages",
             "Active Participants",
@@ -168,13 +169,15 @@ def chat_summary(df):
     print_summary(df)
     return df
 
+
 def print_summary(df):
-    print('------------------- Summary -------------------')
+    print("------------------- Summary -------------------")
     values = df.values.tolist()[0]
     columns = df.columns
 
     for col, val in zip(columns, values):
-        print('{:<25} : {:<9}'.format(col, val))
+        print("{:<25} : {:<9}".format(col, val))
+
 
 def daily_msgs(df, plot=False):
     grouped = df.groupby("Date", as_index=False)["Contact"]

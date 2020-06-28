@@ -3,4 +3,8 @@
 # AnalyzeTheChat
  Python based WhatsApp chat analyzer
 
-# Coming Soon
+
+# How to Install AnaylyzeTheChat?
+```
+pip install 
+```

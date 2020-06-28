@@ -17,8 +17,11 @@ def crawl_the_chat(chat):
     # To identify messages, regular expressions are used to identify dates format
     # Depending on the user's mobile clock settings, there existing two clock patterns
     print("Crawling the chat")
-    pattern_time_24hr = ", (0?[0-9]|1[0-9]|2[0-3]):([0-5][0-9])"
-    pattern_time_12hr = ", (0?[0-9]|1[0-2]):([0-9]|[0-5][0-9]) [AP]M"
+    # pattern_time_24hr = ", (0?[0-9]|1[0-9]|2[0-3]):([0-5][0-9])"
+    # pattern_time_12hr = ", (0?[0-9]|1[0-2]):([0-9]|[0-5][0-9]) [AP]M"
+
+    pattern_time_24hr = ", (0?[0-9]|1[0-9]|2[0-3]):([0-5][0-9])(:[0-5][0-9])?"
+    pattern_time_12hr = ", (0?[0-9]|1[0-2]):([0-9]|[0-5][0-9])(:[0-5][0-9])? [AP]M"
 
     pattern_date_US = "(0?[1-9]|1[0-2])/(0?[1-9]|[12][0-9]|3[01])/(\d{2}|\d{4}), "
     pattern_date_UK = "([12][0-9]|3[01]|0?[1-9])/(0?[1-9]|1[0-2])/(\d{2}|\d{4}), "
@@ -94,7 +97,7 @@ def crawl_the_chat(chat):
 
             if "M" in last_time:
                 # AM/PM format - Convert to 24 hr format
-                AM_PM = time_split[1].split(" ")[1]
+                AM_PM = time_split[-1].split(" ")[1]
                 if AM_PM == "PM":
                     hour += 12
                     if hour == 24:

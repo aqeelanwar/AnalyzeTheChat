@@ -15,18 +15,16 @@ parser = argparse.ArgumentParser(
 parser.add_argument(
     "--path",
     type=str,
-    default="tmt.txt",
+    default="",
     help="Path to the .txt file exported from WhatsApp",
 )
 parser.add_argument(
     "--keyword",
     type=str,
-    default="Good",
+    default="",
     help="Path to the .txt file exported from WhatsApp",
 )
-parser.add_argument(
-    "--plot_results", action="store_true", help="If set to True, the graphs are plotted"
-)
+
 parser.add_argument(
     "--save_as",
     type=str,
@@ -61,16 +59,18 @@ def process_chat(file_path):
     df_words_per_contact = words_per_contact(
         df_extended, save_path, sort=True, plot=True
     )
-    df_this_word_per_contact = this_word_per_contact(
-        df_extended,
-        check_word=[args.keyword],
-        save_path=save_path,
-        sort=True,
-        plot=True,
-    )
+
     df_emojis_per_msg_per_contact = emojis_per_msg_per_contact(
         df_extended, save_path, sort=True, plot=True
     )
+    if args.keyword != '':
+        df_this_word_per_contact = this_word_per_contact(
+            df_extended,
+            check_word=[args.keyword],
+            save_path=save_path,
+            sort=True,
+            plot=True,
+        )
 
     print("----------------- Time Spent ------------------")
     print("Time spent: ", np.round(T.time() - st, 2), "secs")

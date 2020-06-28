@@ -15,7 +15,6 @@ parser = argparse.ArgumentParser(
 parser.add_argument(
     "--path",
     type=str,
-    default="tmt.txt",
     help="Path to the .txt file exported from WhatsApp",
 )
 parser.add_argument(

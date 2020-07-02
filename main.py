@@ -38,7 +38,7 @@ def process_chat(file_path):
     args = parser.parse_args()
     args.path = file_path
 
-    chat = open(args.path, mode="r")
+    chat = open(args.path, mode="r",encoding='utf-8')
     chat = chat.read()
     st = T.time()
     df, df_extended = crawl_the_chat(chat)

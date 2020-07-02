@@ -60,7 +60,7 @@ The results can be viewed in the results folder.
 ![results](images/example.png)
 
 
-## Reference
+# Reference
 If you use this repository or any part of it, please make a proper reference to
 ````
 AnalyzeTheChat: https://github.com/aqeelanwar/AnalyzeTheChat

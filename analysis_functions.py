@@ -17,6 +17,7 @@ def crawl_the_chat(chat):
     # To identify messages, regular expressions are used to identify dates format
     # Depending on the user's mobile clock settings, there existing two clock patterns
 
+    global pattern_date
     print("Crawling the chat")
     # pattern_time_24hr = ", (0?[0-9]|1[0-9]|2[0-3]):([0-5][0-9])"
     # pattern_time_12hr = ", (0?[0-9]|1[0-2]):([0-9]|[0-5][0-9]) [AP]M"
@@ -122,7 +123,7 @@ def crawl_the_chat(chat):
             if "M" in last_time or "m" in last_time:
                 # AM/PM format - Convert to 24 hr format
                 AM_PM = time_split[-1].split(" ")[1]
-                if AM_PM == "PM" or AM_PM == "pm":
+                if AM_PM in ["PM", "pm"]:
                     hour += 12
                     if hour == 24:
                         hour = 12
@@ -289,11 +290,8 @@ def emojis_per_user(df, save_path, sort=False, plot=False):
     grouped = df.groupby("Contact", as_index=False)
     df_list = []
     for name, group in grouped:
-        emoji_count = 0
         msgs = group["Message"].str.split(" ")
-        for m in msgs:
-            if any(x in m for x in emoji.UNICODE_EMOJI):
-                emoji_count += 1
+        emoji_count = sum(1 for m in msgs if any(x in m for x in emoji.UNICODE_EMOJI))
         df_list.append([name, emoji_count])
 
     df_ = pd.DataFrame(df_list, columns=["Contact", "WordCount"])
@@ -366,11 +364,8 @@ def this_word_per_contact(
     grouped = df.groupby("Contact", as_index=False)
     df_list = []
     for name, group in grouped:
-        word_count = 0
         msgs = group["Message"].str.split(" ")
-        for m in msgs:
-            if any(x in m for x in word_list):
-                word_count += 1
+        word_count = sum(1 for m in msgs if any(x in m for x in word_list))
         df_list.append([name, word_count])
 
     df_ = pd.DataFrame(df_list, columns=["Contact", "WordCount"])
@@ -417,10 +412,13 @@ def average_words_per_message_per_contact(df, save_path, sort=False, plot=False)
 
 
 def media_per_contact(df, save_path, sort=False, plot=False):
-    df_ = this_word_per_contact(
-        df, check_word=["<Media", "omitted>"], save_path=save_path, sort=sort, plot=plot
+    return this_word_per_contact(
+        df,
+        check_word=["<Media", "omitted>"],
+        save_path=save_path,
+        sort=sort,
+        plot=plot,
     )
-    return df_
 
 
 def emojis_per_msg_per_contact(df, save_path, sort=False, plot=False):

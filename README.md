@@ -4,7 +4,7 @@
  Python based WhatsApp chat analyzer
 
 # Demo
-The online demo can be found [here](http://www.prism.gatech.edu/~manwar8/AnalyzeTheChat)
+The online demo can be found [here](https://sites.google.com/view/aqeel-anwar/analyzethechat)
 
 
 # How to Install AnalyzeTheChat?

@@ -141,7 +141,7 @@ def plot_time_circle(time, count, title, save_path):
     footer_text = "www.aqeel-anwar.com/AnalyzeTheChat"
     plt.figtext(0.25, 0.98, footer_text)
 
-    name = save_path[0] + "/" + title + "." + save_path[1]
+    name = save_path[0] + "\\" + title + "." + save_path[1]
 
     # plt_bytes = buf.getvalue()
     # buf.close()
@@ -196,7 +196,8 @@ def plot_bar(x, y, title, save_path, max_limit=0):
     small = cv2.cvtColor(small, cv2.COLOR_BGR2RGB)
     height = small.shape[0]
     f.figimage(small, 5, f.bbox.ymax - 1.4 * height)
-    name = save_path[0] + "/" + title + "." + save_path[1]
+    name = save_path[0] + "\\" + title + "." + save_path[1]
+    name = name.replace('-','').replace('<','')
     footer_text = "www.aqeel-anwar.com/AnalyzeTheChat"
     plt.figtext(0.25, 0.98, footer_text)
     print(name)

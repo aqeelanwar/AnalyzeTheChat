@@ -3,10 +3,10 @@
 # Email: aqeel.anwar@gatech.edu
 
 
-from analysis_functions import *
 import argparse
-from aux_functions import display_AnalyzeTheChat
 
+from analysis_functions import *
+from aux_functions import display_AnalyzeTheChat
 
 # Command-line input setup
 parser = argparse.ArgumentParser(

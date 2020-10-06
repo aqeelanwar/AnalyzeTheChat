@@ -3,14 +3,18 @@
 # Email: aqeel.anwar@gatech.edu
 
 
-import matplotlib.pyplot as plt
-from datetime import datetime
-import numpy as np
-from matplotlib import rc
-import re, os
-import pandas as pd
+import os
+import re
 import time as T
-import cv2, emoji
+from datetime import datetime
+
+import numpy as np
+import pandas as pd
+
+import cv2
+import emoji
+import matplotlib.pyplot as plt
+from matplotlib import rc
 
 # rc("text", usetex=True)
 # rc("font", family="cmr10")

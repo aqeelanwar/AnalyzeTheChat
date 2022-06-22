@@ -3,7 +3,7 @@ cycler==0.10.0
 emoji==0.5.4
 kiwisolver==1.2.0
 matplotlib==3.2.2
-numpy==1.19.0
+numpy==1.22.0
 opencv-python==4.2.0.34
 pandas==0.25.3
 pyparsing==2.4.7
